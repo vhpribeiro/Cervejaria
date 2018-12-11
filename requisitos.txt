@@ -1,0 +1,16 @@
+Breja Online  -  Requisitos
+
+Uma cerveja tem que ter:
+*Nome
+*Descricao
+*Cervejaria
+*Tipo
+
+Tipo pode ser:
+-->LAGER
+-->PILSEN
+-->PALE_ALE
+-->INDIAN_PALE_ALE
+-->WEIZEN
+
+Repositório de Cervas
