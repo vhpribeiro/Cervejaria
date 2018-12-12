@@ -15,3 +15,20 @@ E:\vhpri\Documents\Estudos - TDD\BrejaOnline\BrejaOnline\BrejaOnline.Dominio.Tes
 E:\vhpri\Documents\Estudos - TDD\BrejaOnline\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.dll
 E:\vhpri\Documents\Estudos - TDD\BrejaOnline\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.pdb
 E:\vhpri\Documents\Estudos - TDD\BrejaOnline\BrejaOnline\BrejaOnline.Dominio.Test\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.csproj.CopyComplete
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.deps.json
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.runtimeconfig.json
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.runtimeconfig.dev.json
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.dll
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.pdb
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.dll
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.pdb
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.csprojAssemblyReference.cache
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.csproj.CoreCompileInputs.cache
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.AssemblyInfoInputs.cache
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.AssemblyInfo.cs
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.csproj.CopyComplete
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.dll
+C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio.Test\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.Test.pdb

@@ -13,7 +13,11 @@ namespace BrejaOnline.Dominio.Estoque
 
         public void Armazenar(Cerveja cerveja)
         {
-            _estoqueRepositorio.Adiciona(cerveja);
+            var cervejaJaExistente = _estoqueRepositorio.VerificaSeExistePeloNome(cerveja.Nome);
+            if (cervejaJaExistente == false)
+            {
+                _estoqueRepositorio.Adiciona(cerveja);
+            }
         }
     }
 }
