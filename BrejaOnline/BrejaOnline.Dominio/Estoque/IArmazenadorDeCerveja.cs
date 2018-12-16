@@ -2,7 +2,7 @@
 
 namespace BrejaOnline.Dominio.Estoque
 {
-    public interface IEstoqueRepositorio
+    public interface IArmazenadorDeCerveja
     {
         void Adiciona(Cerveja cerveja);
         bool VerificaSeExistePeloNome(string nome);

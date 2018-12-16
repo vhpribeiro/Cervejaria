@@ -1771,7 +1771,7 @@
       ]
     },
     "ExpectedObjects/2.3.4": {
-      "sha512": "apxd2+TpSkXAF14LJs6yksr7yZyV1lF/GM/8GipJg+p7Ih1jhLKri/xYsgV9+OpBKzsAy+4lYQ8CswvHCOSrFQ==",
+      "sha512": "2Cx9YLdxD1HlYDM4RJJ0j1Ta6eh2NIhNnbtX3oHTaJT9RkHmRgLcytdLnk84Lhe2CvAUJz7FA5gIV1EBIIRk6g==",
       "type": "package",
       "path": "expectedobjects/2.3.4",
       "files": [
@@ -6110,23 +6110,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vitorribeiro\\.nuget\\packages\\": {},
+    "C:\\Users\\vhpri\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vitorribeiro\\Documents\\Estudos\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio.Test\\BrejaOnline.Dominio.Test.csproj",
+      "projectUniqueName": "E:\\vhpri\\Documents\\Estudos - TDD\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio.Test\\BrejaOnline.Dominio.Test.csproj",
       "projectName": "BrejaOnline.Dominio.Test",
-      "projectPath": "C:\\Users\\vitorribeiro\\Documents\\Estudos\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio.Test\\BrejaOnline.Dominio.Test.csproj",
-      "packagesPath": "C:\\Users\\vitorribeiro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vitorribeiro\\Documents\\Estudos\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio.Test\\obj\\",
+      "projectPath": "E:\\vhpri\\Documents\\Estudos - TDD\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio.Test\\BrejaOnline.Dominio.Test.csproj",
+      "packagesPath": "C:\\Users\\vhpri\\.nuget\\packages\\",
+      "outputPath": "E:\\vhpri\\Documents\\Estudos - TDD\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\vitorribeiro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\vhpri\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6139,8 +6139,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\vitorribeiro\\Documents\\Estudos\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\BrejaOnline.Dominio.csproj": {
-              "projectPath": "C:\\Users\\vitorribeiro\\Documents\\Estudos\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\BrejaOnline.Dominio.csproj"
+            "E:\\vhpri\\Documents\\Estudos - TDD\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\BrejaOnline.Dominio.csproj": {
+              "projectPath": "E:\\vhpri\\Documents\\Estudos - TDD\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\BrejaOnline.Dominio.csproj"
             }
           }
         }

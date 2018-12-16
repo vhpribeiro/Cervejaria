@@ -1,38 +1,62 @@
-﻿using BrejaOnline.Dominio.Cervejas;
-using BrejaOnline.Dominio.Estoque;
+﻿using System;
+using BrejaOnline.Dominio.Cervejas;
 using BrejaOnline.Dominio.Test.Builders;
-using Moq;
+using ExpectedObjects;
 using Xunit;
 
 namespace BrejaOnline.Dominio.Test
 {
     public class EstoqueTest
     {
-        [Fact]
-        public void Deve_verificar_se_o_metodo_adicionar_foi_chamado()
+        private readonly Cerveja _cerveja;
+
+        public EstoqueTest()
         {
-            var cerveja = new Cerveja("Skoll", 5.50, "Cerveja muito boa",
-                "Mercearia", TipoDeCerveja.LAGER);
-            var cervejaEstoqueMock = new Mock<IEstoqueRepositorio>();
-            var estoqueDeCerveja = new Estoque.Estoque(cervejaEstoqueMock.Object);
+            _cerveja = CervejaBuilder.Novo().Criar();
+        }
+        
+        [Fact]
+        public void Deve_criar_uma_lote_no_estoque()
+        {
+            var estoqueEsperado = new
+            {
+                Cerveja = _cerveja,
+                Quantidade = 3,
+                Lote = 20181216
+            }.ToExpectedObject();
 
-            estoqueDeCerveja.Armazenar(cerveja);
+            var estoqueDesejado = new EstoqueDoPub(_cerveja, 3, 20181216);
 
-            cervejaEstoqueMock.Verify(estoque => estoque.Adiciona(It.IsAny<Cerveja>()));
+            estoqueEsperado.ShouldMatch(estoqueDesejado);
         }
 
-        [Fact]
-        public void Não_deve_adicionar_caso_ja_exista_tal_cerveja_no_estoque()
+        [Theory]
+        [InlineData(-6)]
+        [InlineData(-100)]
+        public void Nao_deve_aceitar_quantidade_invalida(int quantidadeInvalida)
         {
-            var cervejaEsperada = CervejaBuilder.Novo().ComNome("Teste").Criar();
-            var cervejaEstoqueMock = new Mock<IEstoqueRepositorio>();
-            cervejaEstoqueMock.Setup(estoque => estoque.VerificaSeExistePeloNome(cervejaEsperada.Nome)).Returns(true);
-            var estoqueDeCerveja = new Estoque.Estoque(cervejaEstoqueMock.Object);
+            const int lote = 20181216;
 
-            estoqueDeCerveja.Armazenar(cervejaEsperada);
+            Assert.Throws<ArgumentException>(() => new EstoqueDoPub(_cerveja, quantidadeInvalida, lote));
+        }
+    }
 
-            cervejaEstoqueMock.Verify(estoque =>
-                estoque.Adiciona(It.Is<Cerveja>(cerveja => cerveja.Nome == cervejaEsperada.Nome)),Times.Never());
+    public class EstoqueDoPub
+    {
+        public int Quantidade { get; protected set; }
+        public Cerveja Cerveja { get; protected set; }
+        public int Lote { get; protected set; }
+
+        public EstoqueDoPub(Cerveja cerveja, int quantidade, int lote)
+        {
+            if (quantidade < 0)
+            {
+                throw new ArgumentException("Quantidade inválida");
+            }
+
+            Cerveja = cerveja;
+            Quantidade = quantidade;
+            Lote = lote;
         }
     }
 }

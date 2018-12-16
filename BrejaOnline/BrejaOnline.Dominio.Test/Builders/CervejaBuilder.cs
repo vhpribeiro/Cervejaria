@@ -10,7 +10,6 @@ namespace BrejaOnline.Dominio.Test.Builders
         private string _nome = "Heineken";
         private double _preco = 11.5;
         private string _descricao = "Cerveja Alemã";
-        private string _cervejaria = "Bar da esquina";
         private TipoDeCerveja _tipoDeCerveja = TipoDeCerveja.INDIAN_PALE_ALE;
 
         public static CervejaBuilder Novo()
@@ -36,15 +35,9 @@ namespace BrejaOnline.Dominio.Test.Builders
             return this;
         }
 
-        public CervejaBuilder ComCervejaria(string cervejaria)
-        {
-            _cervejaria = cervejaria;
-            return this;
-        }
-
         public Cerveja Criar()
         {
-            return new Cerveja(_nome, _preco, _descricao, _cervejaria, _tipoDeCerveja);
+            return new Cerveja(_nome, _preco, _descricao, _tipoDeCerveja);
         }
     }
 }

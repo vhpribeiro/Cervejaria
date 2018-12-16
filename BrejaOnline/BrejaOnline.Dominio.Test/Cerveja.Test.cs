@@ -1,5 +1,7 @@
 using System;
 using BrejaOnline.Dominio.Cervejas;
+using BrejaOnline.Dominio.Test.Builders;
+using BrejaOnline.Dominio._Base;
 using ExpectedObjects;
 using Xunit;
 
@@ -19,7 +21,6 @@ namespace BrejaOnline.Dominio.Test
             _nome = "Skoll";
             _preco = 7.50;
             _descricao = "Cerveja barata";
-            _cervejaria = "Pub Irlandês";
             _tipo = TipoDeCerveja.LAGER;
         }
 
@@ -31,12 +32,11 @@ namespace BrejaOnline.Dominio.Test
                 Nome = _nome,
                 Preco = _preco,
                 Descricao = _descricao,
-                Cervejaria = _cervejaria,
                 Tipo = _tipo
             };
 
             var cervejaCriada = new Cerveja(cervejaDesejada.Nome, cervejaDesejada.Preco, cervejaDesejada.Descricao,
-                cervejaDesejada.Cervejaria, cervejaDesejada.Tipo);
+                 cervejaDesejada.Tipo);
 
             cervejaDesejada.ToExpectedObject().ShouldMatch(cervejaCriada);
         }
@@ -44,18 +44,36 @@ namespace BrejaOnline.Dominio.Test
         [Fact]
         public void Nao_deve_aceitar_preco_invalido()
         {
-            const double precoInvalido = -7.5;
-            var cervejaDesejada = new
-            {
-                Nome = _nome,
-                Preco = _preco,
-                Descricao = _descricao,
-                Cervejaria = _cervejaria,
-                Tipo = _tipo
-            };
+            Assert.Throws<ExcecaoDeDominio>(() => CervejaBuilder.Novo().ComPreco(-7.5).Criar());
+        }
 
-            Assert.Throws<Exception>(() => new Cerveja(cervejaDesejada.Nome, precoInvalido, cervejaDesejada.Descricao,
-                cervejaDesejada.Cervejaria, cervejaDesejada.Tipo));
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Nao_deve_aceitar_nome_invalido(string nomeInvalido)
+        {
+            Assert.Throws<ExcecaoDeDominio>(() => CervejaBuilder.Novo().ComNome(nomeInvalido).Criar());
+        }
+
+        [Fact]
+        public void Deve_alterar_o_nome()
+        {
+            const string nomeEsperado = "Budweiser";
+            var cerveja = CervejaBuilder.Novo().ComNome("Brahma").Criar();
+
+            cerveja.AlterarNome(nomeEsperado);
+
+            Assert.Equal(nomeEsperado, cerveja.Nome);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Nao_deve_permitir_alterar_nome_por_nome_invalido(string nomeInvalido)
+        {
+            var cerveja = CervejaBuilder.Novo().Criar();
+
+            Assert.Throws<ExcecaoDeDominio>(() => cerveja.AlterarNome(nomeInvalido));
         }
     }
 }

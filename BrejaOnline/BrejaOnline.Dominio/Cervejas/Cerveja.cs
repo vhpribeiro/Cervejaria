@@ -1,4 +1,5 @@
 using System;
+using BrejaOnline.Dominio._Base;
 
 namespace BrejaOnline.Dominio.Cervejas
 {
@@ -7,22 +8,27 @@ namespace BrejaOnline.Dominio.Cervejas
         public string Nome { get; private set; }
         public double Preco { get; private set; }
         public string Descricao { get; private set; }
-        public string Cervejaria { get; private set; }
         public TipoDeCerveja Tipo { get; private set; }
 
-        public Cerveja(string nome, double preco, string descricao, string cervejaria, TipoDeCerveja tipo)
+        public Cerveja(string nome, double preco, string descricao, TipoDeCerveja tipo)
         {
+            ValidadorDeRegras.Novo()
+                .Quando(preco <= 0, "Preço inválido")
+                .Quando(string.IsNullOrEmpty(nome), "Nome inválido")
+                .DispararExcecaoSeExistir();
+
             Nome = nome;
             Preco = preco;
             Descricao = descricao;
-            Cervejaria = cervejaria;
             Tipo = tipo;
+        }
 
-            if (Preco <= 0)
-            {
-                throw new Exception();
-            }
-
+        public void AlterarNome(string nome)
+        {
+            ValidadorDeRegras.Novo()
+                .Quando(string.IsNullOrEmpty(nome), "Nome inválido")
+                .DispararExcecaoSeExistir();
+            Nome = nome;
         }
     }
 }
