@@ -1,4 +1,3 @@
-using System;
 using BrejaOnline.Dominio._Base;
 
 namespace BrejaOnline.Dominio.Cervejas

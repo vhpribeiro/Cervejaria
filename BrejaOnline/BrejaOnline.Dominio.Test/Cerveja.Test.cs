@@ -1,7 +1,6 @@
-using System;
+using BrejaOnline.Dominio._Base;
 using BrejaOnline.Dominio.Cervejas;
 using BrejaOnline.Dominio.Test.Builders;
-using BrejaOnline.Dominio._Base;
 using ExpectedObjects;
 using Xunit;
 

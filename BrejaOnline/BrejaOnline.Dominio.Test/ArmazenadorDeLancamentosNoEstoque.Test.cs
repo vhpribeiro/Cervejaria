@@ -1,56 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BrejaOnline.Dominio.Cervejas;
-using BrejaOnline.Dominio.Estoque;
+﻿using BrejaOnline.Dominio.Cervejas;
+using BrejaOnline.Dominio.Lotes;
 using BrejaOnline.Dominio.Test.Builders;
 using Moq;
+using System;
 using Xunit;
 
 namespace BrejaOnline.Dominio.Test
 {
     public class ArmazenadorDeLancamentosNoEstoqueTest
     {
-        [Fact]
-        public void Deve_adicionar_cerveja_em_um_lote_ja_existente()
-        {
-            const int quantidadeASerAdicionada = 5;
-            const int quantidadeEsperada = 10;
-            var cervejaEsperada = CervejaBuilder.Novo().Criar();
-            const string lote = "20181218";
-            var estoqueEsperado = new EstoqueDoPub(cervejaEsperada, 5, lote);
-            var armazenadorDeCerveja = new Mock<IArmazenadorDeCerveja>();
-            var armazenadorDeEstoque = new Mock<IArmazenadorDeEstoque>();
-            armazenadorDeEstoque.Setup(m => m.ObterPeloLote(lote)).Returns(estoqueEsperado);
-            var armazenadorDeLancamentosNoEstoque = new ArmazenadorDeLancamentosNoEstoque(armazenadorDeCerveja.Object, armazenadorDeEstoque.Object);
+        private readonly Mock<IRepositorioDeCerveja> _armazenadorDeCerveja;
+        private readonly Mock<IRepositorioDeLotes> _armazenadorDeEstoque;
+        private readonly ArmazenadorDeLotes _armazenadorDeLotes;
+        private readonly string _lote;
 
-            armazenadorDeLancamentosNoEstoque.AdicionaNoEstoque(cervejaEsperada.Nome, lote,
+        public ArmazenadorDeLancamentosNoEstoqueTest()
+        {
+            _armazenadorDeCerveja = new Mock<IRepositorioDeCerveja>();
+            _armazenadorDeEstoque = new Mock<IRepositorioDeLotes>();
+            _armazenadorDeLotes = new ArmazenadorDeLotes(_armazenadorDeCerveja.Object, _armazenadorDeEstoque.Object);
+           _lote = "20181218";
+        }
+        [Theory]
+        [InlineData(2, 8, 10)]
+        [InlineData(5, 12, 17)]
+        public void Deve_adicionar_cerveja_em_um_lote_ja_existente(int quantidadeBase, int quantidadeASerAdicionada, int quantidadeEsperada)
+        {
+            var cerveja = CervejaBuilder.Novo().Criar();
+            var estoqueEsperado = new Lote(cerveja, quantidadeBase);
+            _armazenadorDeEstoque.Setup(metodo => metodo.ObterPeloLote(_lote)).Returns(estoqueEsperado);
+            _armazenadorDeCerveja.Setup(metodo => metodo.VerificaSeExistePeloNome(cerveja.Nome)).Returns(true);
+
+            _armazenadorDeLotes.AdicionaNoLote(cerveja.Nome, _lote,
                 quantidadeASerAdicionada);
 
             Assert.Equal(quantidadeEsperada, estoqueEsperado.Quantidade);
         }
-    }
 
-    public interface IArmazenadorDeEstoque
-    {
-        EstoqueDoPub ObterPeloLote(string lote);
-    }
-
-    public class ArmazenadorDeLancamentosNoEstoque
-    {
-        private IArmazenadorDeCerveja _armazenadorDeCerveja;
-        private IArmazenadorDeEstoque _armazenadorDeEstoque;
-
-        public ArmazenadorDeLancamentosNoEstoque(IArmazenadorDeCerveja armazenadorDeCerveja, IArmazenadorDeEstoque armazenadorDeEstoque)
+        [Fact]
+        public void Deve_disparar_excecao_quando_cerveja_nao_existir()
         {
-            _armazenadorDeCerveja = armazenadorDeCerveja;
-            _armazenadorDeEstoque = armazenadorDeEstoque;
-        }
+            const string mensagemEsperada = "Cerveja não encontrada";
+            var cerveja = CervejaBuilder.Novo().Criar();
+            const int quantidadeASerAdicionada = 5;
+            _armazenadorDeCerveja.Setup(metodo => metodo.VerificaSeExistePeloNome(cerveja.Nome)).Returns(false);
 
-        public void AdicionaNoEstoque(string nomeDaCerveja, string lote, int quantidadeASerAdicionada)
-        {
-            var estoque = _armazenadorDeEstoque.ObterPeloLote(lote);
-            estoque.IncrementarQuantidade(quantidadeASerAdicionada);
+            var erro = Assert.Throws<ArgumentException>(() =>
+                _armazenadorDeLotes.AdicionaNoLote(cerveja.Nome, _lote, quantidadeASerAdicionada));
+
+            Assert.Equal(mensagemEsperada, erro.Message);
         }
     }
 }
