@@ -1119,7 +1119,7 @@
     "ExpectedObjects/2.3.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-2Cx9YLdxD1HlYDM4RJJ0j1Ta6eh2NIhNnbtX3oHTaJT9RkHmRgLcytdLnk84Lhe2CvAUJz7FA5gIV1EBIIRk6g==",
+      "sha512": "sha512-apxd2+TpSkXAF14LJs6yksr7yZyV1lF/GM/8GipJg+p7Ih1jhLKri/xYsgV9+OpBKzsAy+4lYQ8CswvHCOSrFQ==",
       "path": "expectedobjects/2.3.4",
       "hashPath": "expectedobjects.2.3.4.nupkg.sha512"
     },

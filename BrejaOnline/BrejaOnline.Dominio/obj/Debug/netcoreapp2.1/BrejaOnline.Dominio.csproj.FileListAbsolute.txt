@@ -14,7 +14,6 @@ C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Domin
 C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.runtimeconfig.dev.json
 C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.dll
 C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio\bin\Debug\netcoreapp2.1\BrejaOnline.Dominio.pdb
-C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.csprojAssemblyReference.cache
 C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.csproj.CoreCompileInputs.cache
 C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.AssemblyInfoInputs.cache
 C:\Users\vitorribeiro\Documents\Estudos\Cervejaria\BrejaOnline\BrejaOnline.Dominio\obj\Debug\netcoreapp2.1\BrejaOnline.Dominio.AssemblyInfo.cs

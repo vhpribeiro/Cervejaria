@@ -13,7 +13,7 @@ namespace BrejaOnline.Dominio.Test
         {
             var cerveja = new Cerveja("Skoll", 5.50, "Cerveja muito boa", TipoDeCerveja.LAGER);
             var repositorio = new Mock<IArmazenadorDeCerveja>();
-            var estoqueDeCerveja = new Estoque.ArmazenadorDeCerveja(repositorio.Object);
+            var estoqueDeCerveja = new ArmazenadorDeCerveja(repositorio.Object);
 
             estoqueDeCerveja.Armazenar(cerveja);
 
@@ -26,7 +26,7 @@ namespace BrejaOnline.Dominio.Test
             var cervejaEsperada = CervejaBuilder.Novo().ComNome("Teste").Criar();
             var cervejaEstoqueMock = new Mock<IArmazenadorDeCerveja>();
             cervejaEstoqueMock.Setup(estoque => estoque.VerificaSeExistePeloNome(cervejaEsperada.Nome)).Returns(true);
-            var estoqueDeCerveja = new Estoque.ArmazenadorDeCerveja(cervejaEstoqueMock.Object);
+            var estoqueDeCerveja = new ArmazenadorDeCerveja(cervejaEstoqueMock.Object);
 
             estoqueDeCerveja.Armazenar(cervejaEsperada);
 

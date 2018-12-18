@@ -12,7 +12,6 @@ namespace BrejaOnline.Dominio.Test
         public string _nome;
         public double _preco;
         public string _descricao;
-        public string _cervejaria;
         public TipoDeCerveja _tipo;
 
 
