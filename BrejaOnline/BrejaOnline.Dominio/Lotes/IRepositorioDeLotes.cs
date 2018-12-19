@@ -1,7 +1,10 @@
-﻿namespace BrejaOnline.Dominio.Lotes
+﻿using System;
+
+namespace BrejaOnline.Dominio.Lotes
 {
     public interface IRepositorioDeLotes
     {
-        Lote ObterPeloLote(string lote);
+        Lote ObterPeloId(string identificador);
+        void Adiciona(Lote lote);
     }
 }

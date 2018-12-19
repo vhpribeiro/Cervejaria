@@ -3,6 +3,7 @@ using BrejaOnline.Dominio.Test.Builders;
 using ExpectedObjects;
 using System;
 using BrejaOnline.Dominio.Lotes;
+using BrejaOnline.Dominio._Base;
 using Xunit;
 
 namespace BrejaOnline.Dominio.Test
@@ -10,12 +11,12 @@ namespace BrejaOnline.Dominio.Test
     public class LoteTest
     {
         private readonly Cerveja _cerveja;
-        private readonly string _lote;
+        private readonly string _identificador;
 
         public LoteTest()
         {
             _cerveja = CervejaBuilder.Novo().Criar();
-            _lote = DateTime.Now.ToString("yyyyMMdd");
+            _identificador = DateTime.Now.ToString("yyyyMMdd");
         }
         
         [Fact]
@@ -25,7 +26,7 @@ namespace BrejaOnline.Dominio.Test
             {
                 Cerveja = _cerveja,
                 Quantidade = 3,
-                Identificador = _lote
+                Identificador = _identificador
             }.ToExpectedObject();
 
             var estoqueDesejado = new Lote(_cerveja, 3);
@@ -38,7 +39,7 @@ namespace BrejaOnline.Dominio.Test
         [InlineData(-100)]
         public void Nao_deve_aceitar_quantidade_invalida(int quantidadeInvalida)
         {
-            Assert.Throws<ArgumentException>(() => new Lote(_cerveja, quantidadeInvalida));
+            Assert.Throws<ExcecaoDeDominio>(() => new Lote(_cerveja, quantidadeInvalida));
         }
 
         [Theory]
@@ -55,19 +56,33 @@ namespace BrejaOnline.Dominio.Test
             Assert.Equal(quantidadeEsperada, estoque.Quantidade);
         }
 
-        [Fact]
-        public void Nao_deve_permitir_alterar_quantidade_para_valor_invalido()
+        [Theory]
+        [InlineData(-49)]
+        [InlineData(-150)]
+        public void Nao_deve_permitir_alterar_quantidade_para_valores_invalido_ao_incrementar(int valorInvalido)
+        {
+            const int quantidadeBase = 6;
+            var cerveja = CervejaBuilder.Novo().Criar();
+            var estoque = new Lote(cerveja, quantidadeBase);
+
+            Assert.Throws<ExcecaoDeDominio>(() => estoque.IncrementarQuantidade(valorInvalido));
+        }
+
+        [Theory]
+        [InlineData(22, 44)]
+        [InlineData(22, -44)]
+        public void Nao_deve_permitir_alterar_quantidade_para_valores_invalido_ao_decrementar(int quantidadeBase, int valorInvalido)
         {
             var cerveja = CervejaBuilder.Novo().Criar();
-            var estoque = new Lote(cerveja, 6);
+            var lote = new Lote(cerveja, quantidadeBase);
 
-            Assert.Throws<ArgumentException>(() => estoque.IncrementarQuantidade(-90));
+            Assert.Throws<ExcecaoDeDominio>(() => lote.DecrementarQuantidade(valorInvalido));
         }
 
         [Fact]
         public void Nao_deve_permitir_cerveja_invalida()
         {
-            Assert.Throws<ArgumentException>(() => new Lote(null, 5));
+            Assert.Throws<ExcecaoDeDominio>(() => new Lote(null, 5));
         }
 
         [Fact]
