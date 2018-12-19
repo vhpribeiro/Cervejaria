@@ -688,23 +688,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vitorribeiro\\.nuget\\packages\\": {},
+    "C:\\Users\\vhpri\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vitorribeiro\\Documents\\Estudos\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\BrejaOnline.Dominio.csproj",
+      "projectUniqueName": "E:\\vhpri\\Documents\\Estudos - TDD\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\BrejaOnline.Dominio.csproj",
       "projectName": "BrejaOnline.Dominio",
-      "projectPath": "C:\\Users\\vitorribeiro\\Documents\\Estudos\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\BrejaOnline.Dominio.csproj",
-      "packagesPath": "C:\\Users\\vitorribeiro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vitorribeiro\\Documents\\Estudos\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\obj\\",
+      "projectPath": "E:\\vhpri\\Documents\\Estudos - TDD\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\BrejaOnline.Dominio.csproj",
+      "packagesPath": "C:\\Users\\vhpri\\.nuget\\packages\\",
+      "outputPath": "E:\\vhpri\\Documents\\Estudos - TDD\\Cervejaria\\BrejaOnline\\BrejaOnline.Dominio\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\vitorribeiro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\vhpri\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
