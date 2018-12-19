@@ -2,6 +2,6 @@
 {
     public interface IRepositorioDeLotes
     {
-        Lote ObterPeloLote(string lote);
+        Lote ObterPeloId(string identificador);
     }
 }
