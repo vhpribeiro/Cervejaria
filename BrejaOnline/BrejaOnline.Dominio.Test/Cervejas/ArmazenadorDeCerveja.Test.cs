@@ -1,10 +1,9 @@
 ﻿using BrejaOnline.Dominio.Cervejas;
-using BrejaOnline.Dominio.Lotes;
 using BrejaOnline.Dominio.Test.Builders;
 using Moq;
 using Xunit;
 
-namespace BrejaOnline.Dominio.Test
+namespace BrejaOnline.Dominio.Test.Cervejas
 {
     public class ArmazenadorDeCervejaTest
     {

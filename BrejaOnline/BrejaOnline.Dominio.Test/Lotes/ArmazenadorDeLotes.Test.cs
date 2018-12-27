@@ -1,25 +1,24 @@
-﻿using BrejaOnline.Dominio.Cervejas;
+﻿using System;
+using BrejaOnline.Dominio.Cervejas;
 using BrejaOnline.Dominio.Lotes;
 using BrejaOnline.Dominio.Test.Builders;
 using Moq;
-using System;
-using System.Linq.Expressions;
 using Xunit;
 
-namespace BrejaOnline.Dominio.Test
+namespace BrejaOnline.Dominio.Test.Lotes
 {
-    public class ArmazenadorDeLotes
+    public class ArmazenadorDeLotesTeste
     {
         private readonly Mock<IRepositorioDeCerveja> _repositorioDeCerveja;
-        private readonly Mock<IRepositorioDeLotes> _repositorioDeLote;
-        private readonly Lotes.ArmazenadorDeLotes _armazenadorDeLotes;
+        private readonly Mock<IRepositorioDeLotes> _repositorioDeLotes;
+        private readonly ArmazenadorDeLotes _armazenadorDeLotes;
         private readonly string _identificador;
 
-        public ArmazenadorDeLotes()
+        public ArmazenadorDeLotesTeste()
         {
             _repositorioDeCerveja = new Mock<IRepositorioDeCerveja>();
-            _repositorioDeLote = new Mock<IRepositorioDeLotes>();
-            _armazenadorDeLotes = new Lotes.ArmazenadorDeLotes(_repositorioDeCerveja.Object, _repositorioDeLote.Object);
+            _repositorioDeLotes = new Mock<IRepositorioDeLotes>();
+            _armazenadorDeLotes = new ArmazenadorDeLotes(_repositorioDeCerveja.Object, _repositorioDeLotes.Object);
            _identificador = DateTime.Now.ToString("yyyyMMdd"); 
         }
 
@@ -30,7 +29,7 @@ namespace BrejaOnline.Dominio.Test
         {
             var cerveja = CervejaBuilder.Novo().Criar();
             var loteEsperado = new Lote(cerveja, quantidadeBase);
-            _repositorioDeLote.Setup(metodo => metodo.ObterPeloId(_identificador)).Returns(loteEsperado);
+            _repositorioDeLotes.Setup(metodo => metodo.ObterPeloId(_identificador)).Returns(loteEsperado);
             _repositorioDeCerveja.Setup(metodo => metodo.VerificaSeExistePeloNome(cerveja.Nome)).Returns(true);
 
             _armazenadorDeLotes.AdicionaNoLote(cerveja.Nome, _identificador,
@@ -47,7 +46,7 @@ namespace BrejaOnline.Dominio.Test
             var cerveja = CervejaBuilder.Novo().Criar();
             var lote = new Lote(cerveja, quantidadeBase);
             var quantidadeEsperada = quantidadeBase - quantidadeASerReduzida;
-            _repositorioDeLote.Setup(metodo => metodo.ObterPeloId(lote.Identificador)).Returns(lote);
+            _repositorioDeLotes.Setup(metodo => metodo.ObterPeloId(lote.Identificador)).Returns(lote);
 
             _armazenadorDeLotes.ReduzirQuantidadeNoLote(_identificador, quantidadeASerReduzida);
 
@@ -76,7 +75,7 @@ namespace BrejaOnline.Dominio.Test
 
             _armazenadorDeLotes.Armazenar(loteEsperado);
 
-            _repositorioDeLote.Verify(estoque => estoque.Adiciona(
+            _repositorioDeLotes.Verify(estoque => estoque.Adiciona(
                 It.Is<Lote>(lote => lote.Identificador == loteEsperado.Identificador)));
         }
     }

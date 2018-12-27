@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BrejaOnline.Dominio._Base
 {
-    class ValidadorDeRegras
+    public class ValidadorDeRegras
     {
         private readonly List<string> _mensagensDeErro;
 
