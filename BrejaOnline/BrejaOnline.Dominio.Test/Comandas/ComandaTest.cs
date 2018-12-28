@@ -1,4 +1,5 @@
-﻿using BrejaOnline.Dominio.Cervejas;
+﻿using System;
+using BrejaOnline.Dominio.Comandas;
 using BrejaOnline.Dominio.Test.Builders;
 using BrejaOnline.Dominio._Base;
 using ExpectedObjects;
@@ -30,28 +31,30 @@ namespace BrejaOnline.Dominio.Test.Comandas
         public void Nao_deve_permitir_quantidade_invalida()
         {
             const int quantidadeInvalida = -6;
-            var cerveja = CervejaBuilder.Novo().Criar();
 
-            Assert.Throws<ExcecaoDeDominio>(() => new Comanda(cerveja, quantidadeInvalida));
+            Action acao = () => ComandaBuilder.Novo().ComQuantidade(quantidadeInvalida).Criar();
+
+            Assert.Throws<ExcecaoDeDominio>(acao);
         }
-    }
 
-    public class Comanda
-    {
-        public Cerveja Cerveja { get; protected set; }
-        public int Quantidade { get; protected set; }
-        public double ValorTotal { get; protected set; }
-
-        public Comanda(Cerveja cerveja, int quantidade)
+        [Fact]
+        public void Deve_alterar_a_quantidade()
         {
-            ValidadorDeRegras.Novo()
-                .Quando(quantidade < 0, "Quantidade inválida")
-                .DispararExcecaoSeExistir();
+            const int quantidadeEsperada = 5;
+            var comanda = ComandaBuilder.Novo().Criar();
 
-            Cerveja = cerveja;
-            Quantidade = quantidade;
-            ValorTotal = cerveja.Preco * quantidade;
+            comanda.AlterarQuantidade(quantidadeEsperada);
+
+            Assert.Equal(quantidadeEsperada, comanda.Quantidade);
         }
 
+        [Fact]
+        public void Nao_deve_alterar_para_uma_quantidade_invalida()
+        {
+            const int quantidadeInvalida = -6;
+            var comanda = ComandaBuilder.Novo().Criar();
+
+            Assert.Throws<ExcecaoDeDominio>(() => comanda.AlterarQuantidade(quantidadeInvalida));
+        }
     }
 }
