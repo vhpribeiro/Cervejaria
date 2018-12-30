@@ -3,16 +3,16 @@ using BrejaOnline.Dominio._Base;
 
 namespace BrejaOnline.Dominio.Comandas
 {
-    public class VendedorDeCervejas
+    public class Vendedor
     {
         private readonly IRepositorioDeLotes _repositorioDeLotes;
 
-        public VendedorDeCervejas(IRepositorioDeLotes repositorioDeLotes)
+        public Vendedor(IRepositorioDeLotes repositorioDeLotes)
         {
             _repositorioDeLotes = repositorioDeLotes;
         }
 
-        public void Venda(Comanda comanda)
+        public void Vender(Comanda comanda)
         {
             ValidarVenda(comanda);
             var listaDeLotesComACervejaDesejada = _repositorioDeLotes.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome);

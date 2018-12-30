@@ -9,15 +9,15 @@ using Xunit;
 
 namespace BrejaOnline.Dominio.Test.Comandas
 {
-    public class VendedorDeCervejasTest
+    public class VendedorTest
     {
         private readonly Mock<IRepositorioDeLotes> _repositorioDeLotes;
-        private readonly VendedorDeCervejas _vendedorDeCervejas;
+        private readonly Vendedor _vendedor;
 
-        public VendedorDeCervejasTest()
+        public VendedorTest()
         {
             _repositorioDeLotes = new Mock<IRepositorioDeLotes>();
-            _vendedorDeCervejas = new VendedorDeCervejas(_repositorioDeLotes.Object);
+            _vendedor = new Vendedor(_repositorioDeLotes.Object);
         }
         [Fact]
         public void Deve_realizar_uma_busca_nos_lotes_pelo_nome_da_cerveja()
@@ -31,7 +31,7 @@ namespace BrejaOnline.Dominio.Test.Comandas
             _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
                 .Returns(listaDeLotesObtida);
 
-            _vendedorDeCervejas.ValidarVenda(comanda);
+            _vendedor.ValidarVenda(comanda);
 
             _repositorioDeLotes.Verify(repositorio =>
                 repositorio.ObterPeloNomeDaCerveja(It.Is<string>(nomeDaCerveja => nomeDaCerveja == comanda.Cerveja.Nome)));
@@ -50,7 +50,7 @@ namespace BrejaOnline.Dominio.Test.Comandas
             _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
                 .Returns(listaDeLotesObtida);
 
-            Assert.Throws<ExcecaoDeDominio>(() => _vendedorDeCervejas.ValidarVenda(comanda));
+            Assert.Throws<ExcecaoDeDominio>(() => _vendedor.ValidarVenda(comanda));
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace BrejaOnline.Dominio.Test.Comandas
                 .Returns(listaDeLotes);
             
 
-            _vendedorDeCervejas.Venda(comanda);
+            _vendedor.Vender(comanda);
 
             Assert.Equal(quantidadeEsperada, listaDeLotes.First().Quantidade);
         }
@@ -84,7 +84,7 @@ namespace BrejaOnline.Dominio.Test.Comandas
             _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
                 .Returns(listaDeLotes);
 
-            _vendedorDeCervejas.Venda(comanda);
+            _vendedor.Vender(comanda);
 
             _repositorioDeLotes.Verify(repositorio => repositorio.Excluir(It.IsAny<Lote>()), Times.AtLeast(2));
         }
