@@ -1,12 +1,12 @@
-﻿using BrejaOnline.Dominio.Cervejas;
-using BrejaOnline.Dominio.Test.Builders;
-using ExpectedObjects;
-using System;
+﻿using System;
+using BrejaOnline.Dominio.Cervejas;
 using BrejaOnline.Dominio.Lotes;
+using BrejaOnline.Dominio.Test.Builders;
 using BrejaOnline.Dominio._Base;
+using ExpectedObjects;
 using Xunit;
 
-namespace BrejaOnline.Dominio.Test
+namespace BrejaOnline.Dominio.Test.Lotes
 {
     public class LoteTest
     {
