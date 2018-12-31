@@ -9,15 +9,15 @@ using Xunit;
 
 namespace BrejaOnline.Dominio.Test.Comandas
 {
-    public class VendedorTest
+    public class RealizacaoDaVendaTest
     {
         private readonly Mock<IRepositorioDeLotes> _repositorioDeLotes;
-        private readonly Vendedor _vendedor;
+        private readonly RealizacaoDaVenda _realizacaoDaVenda;
 
-        public VendedorTest()
+        public RealizacaoDaVendaTest()
         {
             _repositorioDeLotes = new Mock<IRepositorioDeLotes>();
-            _vendedor = new Vendedor(_repositorioDeLotes.Object);
+            _realizacaoDaVenda = new RealizacaoDaVenda(_repositorioDeLotes.Object);
         }
         [Fact]
         public void Deve_realizar_uma_busca_nos_lotes_pelo_nome_da_cerveja()
@@ -31,7 +31,7 @@ namespace BrejaOnline.Dominio.Test.Comandas
             _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
                 .Returns(listaDeLotesObtida);
 
-            _vendedor.ValidarVenda(comanda);
+            _realizacaoDaVenda.ValidarVenda(comanda);
 
             _repositorioDeLotes.Verify(repositorio =>
                 repositorio.ObterPeloNomeDaCerveja(It.Is<string>(nomeDaCerveja => nomeDaCerveja == comanda.Cerveja.Nome)));
@@ -50,13 +50,13 @@ namespace BrejaOnline.Dominio.Test.Comandas
             _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
                 .Returns(listaDeLotesObtida);
 
-            Assert.Throws<ExcecaoDeDominio>(() => _vendedor.ValidarVenda(comanda));
+            Assert.Throws<ExcecaoDeDominio>(() => _realizacaoDaVenda.ValidarVenda(comanda));
         }
 
         [Fact]
         public void Deve_diminuir_quantidade_do_lote_caso_a_da_comanda_for_menor()
         {
-            int quantidadeEsperada = 1;
+            const int quantidadeEsperada = 1;
             var comanda = ComandaBuilder.Novo().ComQuantidade(7).Criar();
             var listaDeLotes = new List<Lote>
             {
@@ -66,9 +66,26 @@ namespace BrejaOnline.Dominio.Test.Comandas
                 .Returns(listaDeLotes);
             
 
-            _vendedor.Vender(comanda);
+            _realizacaoDaVenda.Vender(comanda);
 
             Assert.Equal(quantidadeEsperada, listaDeLotes.First().Quantidade);
+        }
+
+        [Fact]
+        public void Deve_atualizar_o_lote_com_a_nova_quantidade_no_repositorio()
+        {
+            const int quantidadeEsperada = 1;
+            var comanda = ComandaBuilder.Novo().ComQuantidade(7).Criar();
+            var listaDeLotes = new List<Lote>
+            {
+                new Lote(comanda.Cerveja, 8)
+            };
+            _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
+                .Returns(listaDeLotes);
+
+            _realizacaoDaVenda.Vender(comanda);
+
+            _repositorioDeLotes.Verify(repositorio => repositorio.Atualizar(It.Is<Lote>(lote => lote.Quantidade == quantidadeEsperada)));
         }
 
         [Fact]
@@ -84,7 +101,7 @@ namespace BrejaOnline.Dominio.Test.Comandas
             _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
                 .Returns(listaDeLotes);
 
-            _vendedor.Vender(comanda);
+            _realizacaoDaVenda.Vender(comanda);
 
             _repositorioDeLotes.Verify(repositorio => repositorio.Excluir(It.IsAny<Lote>()), Times.AtLeast(2));
         }

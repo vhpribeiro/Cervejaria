@@ -3,11 +3,11 @@ using BrejaOnline.Dominio._Base;
 
 namespace BrejaOnline.Dominio.Comandas
 {
-    public class Vendedor
+    public class RealizacaoDaVenda
     {
         private readonly IRepositorioDeLotes _repositorioDeLotes;
 
-        public Vendedor(IRepositorioDeLotes repositorioDeLotes)
+        public RealizacaoDaVenda(IRepositorioDeLotes repositorioDeLotes)
         {
             _repositorioDeLotes = repositorioDeLotes;
         }
@@ -21,7 +21,9 @@ namespace BrejaOnline.Dominio.Comandas
             {
                 if (lote.Quantidade > comanda.Quantidade)
                 {
+                    //TODO verificar se vale a pena o método de adicionar e remover do lote, que estao no armazenadorDeLotes. Talvez eles devam ser chamados aqui?
                     lote.DecrementarQuantidade(comanda.Quantidade);
+                    _repositorioDeLotes.Atualizar(lote);
                     break;
                 }
                 else
