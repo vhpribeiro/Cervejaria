@@ -70,7 +70,7 @@ namespace BrejaOnline.Dominio.Test.Lotes
 
             Action acao = () => estoque.IncrementarQuantidade(valorInvalido);
 
-            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeInvalida);
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeAdicionadaEhInvalida);
         }
 
         [Theory]
@@ -83,7 +83,7 @@ namespace BrejaOnline.Dominio.Test.Lotes
 
             Action acao = () => lote.DecrementarQuantidade(valorInvalido);
 
-            Assert.Throws<ExcecaoDeDominio>(acao);
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeReduzidaEhInvalida);
         }
 
         [Fact]

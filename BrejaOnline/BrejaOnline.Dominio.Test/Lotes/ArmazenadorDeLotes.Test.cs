@@ -1,5 +1,4 @@
-﻿using System;
-using BrejaOnline.Dominio.Cervejas;
+﻿using BrejaOnline.Dominio.Cervejas;
 using BrejaOnline.Dominio.Lotes;
 using BrejaOnline.Dominio.Test._Builders;
 using Moq;
@@ -12,14 +11,12 @@ namespace BrejaOnline.Dominio.Test.Lotes
         private readonly Mock<IRepositorioDeCerveja> _repositorioDeCerveja;
         private readonly Mock<IRepositorioDeLotes> _repositorioDeLotes;
         private readonly ArmazenadorDeLotes _armazenadorDeLotes;
-        private readonly string _identificador;
 
         public ArmazenadorDeLotesTeste()
         {
             _repositorioDeCerveja = new Mock<IRepositorioDeCerveja>();
             _repositorioDeLotes = new Mock<IRepositorioDeLotes>();
             _armazenadorDeLotes = new ArmazenadorDeLotes(_repositorioDeCerveja.Object, _repositorioDeLotes.Object);
-           _identificador = DateTime.Now.ToString("yyyyMMdd"); 
         }
 
         [Fact]

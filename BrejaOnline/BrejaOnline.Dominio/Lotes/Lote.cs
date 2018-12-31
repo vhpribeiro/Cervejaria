@@ -25,7 +25,7 @@ namespace BrejaOnline.Dominio.Lotes
         public void IncrementarQuantidade(int quantidadeASerAdicionada)
         {
             ValidadorDeRegras.Novo()
-                .Quando(Quantidade > Quantidade + quantidadeASerAdicionada, Resource.QuantidadeInvalida)
+                .Quando(Quantidade > Quantidade + quantidadeASerAdicionada, Resource.QuantidadeAdicionadaEhInvalida)
                 .DispararExcecaoSeExistir();
 
             Quantidade += quantidadeASerAdicionada;
@@ -34,8 +34,7 @@ namespace BrejaOnline.Dominio.Lotes
         public void DecrementarQuantidade(int quantidadeASerReduzida)
         {
             ValidadorDeRegras.Novo()
-                .Quando(Quantidade < Quantidade - quantidadeASerReduzida, "Quantidade adicionada inválida")
-                .Quando(Quantidade - quantidadeASerReduzida < 0, "Novo valor de quantidade é inferior a zero")
+                .Quando(Quantidade < Quantidade - quantidadeASerReduzida || Quantidade - quantidadeASerReduzida < 0, Resource.QuantidadeReduzidaEhInvalida)
                 .DispararExcecaoSeExistir();
 
             Quantidade -= quantidadeASerReduzida;

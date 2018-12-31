@@ -7,5 +7,7 @@
         public static string PrecoInvalido = "Preco inválido";
         public static string QuantidadeIndisponivel = "Quantidade indisponível";
         public static string CervejaInvalida = "Cerveja inválida";
+        public static string QuantidadeAdicionadaEhInvalida = "Quantidade a ser adicionada é inválida";
+        public static string QuantidadeReduzidaEhInvalida = "Quantidade a ser reduzida é inválida";
     }
 }
