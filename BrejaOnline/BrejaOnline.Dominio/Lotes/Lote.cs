@@ -13,8 +13,8 @@ namespace BrejaOnline.Dominio.Lotes
         public Lote(Cerveja cerveja, int quantidade)
         {
             ValidadorDeRegras.Novo()
-                .Quando(quantidade < 0, "Quantidade inválida")
-                .Quando(cerveja == null, "Cerveja não pode ser nula")
+                .Quando(quantidade < 0, Resource.QuantidadeInvalida)
+                .Quando(cerveja == null, Resource.CervejaInvalida)
                 .DispararExcecaoSeExistir();
 
             Cerveja = cerveja;
@@ -25,7 +25,7 @@ namespace BrejaOnline.Dominio.Lotes
         public void IncrementarQuantidade(int quantidadeASerAdicionada)
         {
             ValidadorDeRegras.Novo()
-                .Quando(Quantidade > Quantidade + quantidadeASerAdicionada, "Quantidade inválida")
+                .Quando(Quantidade > Quantidade + quantidadeASerAdicionada, Resource.QuantidadeInvalida)
                 .DispararExcecaoSeExistir();
 
             Quantidade += quantidadeASerAdicionada;

@@ -1,7 +1,8 @@
 ﻿using System;
 using BrejaOnline.Dominio.Cervejas;
 using BrejaOnline.Dominio.Lotes;
-using BrejaOnline.Dominio.Test.Builders;
+using BrejaOnline.Dominio.Test._Builders;
+using BrejaOnline.Dominio.Test._Util;
 using BrejaOnline.Dominio._Base;
 using ExpectedObjects;
 using Xunit;
@@ -39,7 +40,9 @@ namespace BrejaOnline.Dominio.Test.Lotes
         [InlineData(-100)]
         public void Nao_deve_aceitar_quantidade_invalida(int quantidadeInvalida)
         {
-            Assert.Throws<ExcecaoDeDominio>(() => new Lote(_cerveja, quantidadeInvalida));
+            Action acao = () => new Lote(_cerveja, quantidadeInvalida);
+
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeInvalida);
         }
 
         [Theory]
@@ -65,7 +68,9 @@ namespace BrejaOnline.Dominio.Test.Lotes
             var cerveja = CervejaBuilder.Novo().Criar();
             var estoque = new Lote(cerveja, quantidadeBase);
 
-            Assert.Throws<ExcecaoDeDominio>(() => estoque.IncrementarQuantidade(valorInvalido));
+            Action acao = () => estoque.IncrementarQuantidade(valorInvalido);
+
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeInvalida);
         }
 
         [Theory]
@@ -76,13 +81,19 @@ namespace BrejaOnline.Dominio.Test.Lotes
             var cerveja = CervejaBuilder.Novo().Criar();
             var lote = new Lote(cerveja, quantidadeBase);
 
-            Assert.Throws<ExcecaoDeDominio>(() => lote.DecrementarQuantidade(valorInvalido));
+            Action acao = () => lote.DecrementarQuantidade(valorInvalido);
+
+            Assert.Throws<ExcecaoDeDominio>(acao);
         }
 
         [Fact]
         public void Nao_deve_permitir_cerveja_invalida()
         {
-            Assert.Throws<ExcecaoDeDominio>(() => new Lote(null, 5));
+            Cerveja cervejaInvalida = null;
+
+            Action acao = () => new Lote(cervejaInvalida, 5);
+
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.CervejaInvalida);
         }
 
         [Fact]
