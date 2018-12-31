@@ -1,5 +1,7 @@
+using System;
 using BrejaOnline.Dominio.Cervejas;
-using BrejaOnline.Dominio.Test.Builders;
+using BrejaOnline.Dominio.Test._Builders;
+using BrejaOnline.Dominio.Test._Util;
 using BrejaOnline.Dominio._Base;
 using ExpectedObjects;
 using Xunit;
@@ -42,7 +44,9 @@ namespace BrejaOnline.Dominio.Test.Cervejas
         [Fact]
         public void Nao_deve_aceitar_preco_invalido()
         {
-            Assert.Throws<ExcecaoDeDominio>(() => CervejaBuilder.Novo().ComPreco(-7.5).Criar());
+            Action acao = () => CervejaBuilder.Novo().ComPreco(-7.5).Criar();
+
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.PrecoInvalido);
         }
 
         [Theory]
@@ -50,7 +54,9 @@ namespace BrejaOnline.Dominio.Test.Cervejas
         [InlineData(null)]
         public void Nao_deve_aceitar_nome_invalido(string nomeInvalido)
         {
-            Assert.Throws<ExcecaoDeDominio>(() => CervejaBuilder.Novo().ComNome(nomeInvalido).Criar());
+            Action acao = () => CervejaBuilder.Novo().ComNome(nomeInvalido).Criar();
+
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.NomeInvalido);
         }
 
         [Fact]
@@ -71,7 +77,9 @@ namespace BrejaOnline.Dominio.Test.Cervejas
         {
             var cerveja = CervejaBuilder.Novo().Criar();
 
-            Assert.Throws<ExcecaoDeDominio>(() => cerveja.AlterarNome(nomeInvalido));
+            Action acao = () => cerveja.AlterarNome(nomeInvalido);
+
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.NomeInvalido);
         }
     }
 }

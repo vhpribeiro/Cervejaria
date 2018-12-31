@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BrejaOnline.Dominio.Comandas;
 using BrejaOnline.Dominio.Lotes;
-using BrejaOnline.Dominio.Test.Builders;
+using BrejaOnline.Dominio.Test._Builders;
+using BrejaOnline.Dominio.Test._Util;
 using BrejaOnline.Dominio._Base;
 using Moq;
 using Xunit;
@@ -46,11 +48,12 @@ namespace BrejaOnline.Dominio.Test.Comandas
                 new Lote(comanda.Cerveja, 2),
                 new Lote(comanda.Cerveja, 3)
             };
-
             _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
                 .Returns(listaDeLotesObtida);
 
-            Assert.Throws<ExcecaoDeDominio>(() => _realizacaoDaVenda.ValidarVenda(comanda));
+            Action acao = () => _realizacaoDaVenda.ValidarVenda(comanda);
+
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeIndisponivel);
         }
 
         [Fact]
@@ -64,7 +67,6 @@ namespace BrejaOnline.Dominio.Test.Comandas
             };
             _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
                 .Returns(listaDeLotes);
-            
 
             _realizacaoDaVenda.Vender(comanda);
 

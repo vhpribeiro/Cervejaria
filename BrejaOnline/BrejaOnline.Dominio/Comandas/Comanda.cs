@@ -12,7 +12,7 @@ namespace BrejaOnline.Dominio.Comandas
         public Comanda(Cerveja cerveja, int quantidade)
         {
             ValidadorDeRegras.Novo()
-                .Quando(quantidade < 0, "Quantidade inválida")
+                .Quando(quantidade < 0, Resource.QuantidadeInvalida)
                 .DispararExcecaoSeExistir();
 
             Cerveja = cerveja;
@@ -23,7 +23,7 @@ namespace BrejaOnline.Dominio.Comandas
         public void AlterarQuantidade(int quantidadeEsperada)
         {
             ValidadorDeRegras.Novo()
-                .Quando(quantidadeEsperada < 0, "Quantidade inválida")
+                .Quando(quantidadeEsperada < 0, Resource.QuantidadeInvalida)
                 .DispararExcecaoSeExistir();
 
             Quantidade = quantidadeEsperada;

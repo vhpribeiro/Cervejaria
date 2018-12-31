@@ -21,7 +21,6 @@ namespace BrejaOnline.Dominio.Comandas
             {
                 if (lote.Quantidade > comanda.Quantidade)
                 {
-                    //TODO verificar se vale a pena o método de adicionar e remover do lote, que estao no armazenadorDeLotes. Talvez eles devam ser chamados aqui?
                     lote.DecrementarQuantidade(comanda.Quantidade);
                     _repositorioDeLotes.Atualizar(lote);
                     break;
@@ -43,7 +42,7 @@ namespace BrejaOnline.Dominio.Comandas
                 quantidadeTotalQueSeTemNosLotes += lote.Quantidade);
 
             ValidadorDeRegras.Novo()
-                .Quando(quantidadeTotalQueSeTemNosLotes < comanda.Quantidade, "Quantidade indisponível")
+                .Quando(quantidadeTotalQueSeTemNosLotes < comanda.Quantidade, Resource.QuantidadeIndisponivel)
                 .DispararExcecaoSeExistir();
         }
     }

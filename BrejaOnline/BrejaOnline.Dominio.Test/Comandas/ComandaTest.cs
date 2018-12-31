@@ -1,6 +1,7 @@
 ﻿using System;
 using BrejaOnline.Dominio.Comandas;
-using BrejaOnline.Dominio.Test.Builders;
+using BrejaOnline.Dominio.Test._Builders;
+using BrejaOnline.Dominio.Test._Util;
 using BrejaOnline.Dominio._Base;
 using ExpectedObjects;
 using Xunit;
@@ -14,7 +15,7 @@ namespace BrejaOnline.Dominio.Test.Comandas
         {
             var cerveja = CervejaBuilder.Novo().Criar();
             const int quantidade = 4;
-            double valorTotal = cerveja.Preco * quantidade;
+            var valorTotal = cerveja.Preco * quantidade;
             var comandaEsperada = new
             {
                 Cerveja = cerveja,
@@ -34,7 +35,7 @@ namespace BrejaOnline.Dominio.Test.Comandas
 
             Action acao = () => ComandaBuilder.Novo().ComQuantidade(quantidadeInvalida).Criar();
 
-            Assert.Throws<ExcecaoDeDominio>(acao);
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeInvalida);
         }
 
         [Fact]
@@ -54,7 +55,9 @@ namespace BrejaOnline.Dominio.Test.Comandas
             const int quantidadeInvalida = -6;
             var comanda = ComandaBuilder.Novo().Criar();
 
-            Assert.Throws<ExcecaoDeDominio>(() => comanda.AlterarQuantidade(quantidadeInvalida));
+            Action acao = () => comanda.AlterarQuantidade(quantidadeInvalida);
+
+            Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeInvalida);
         }
     }
 }
