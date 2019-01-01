@@ -1,4 +1,5 @@
-﻿using BrejaOnline.Dominio.Lotes;
+﻿using System.Collections.Generic;
+using BrejaOnline.Dominio.Lotes;
 using BrejaOnline.Dominio._Base;
 
 namespace BrejaOnline.Dominio.Comandas
@@ -12,12 +13,30 @@ namespace BrejaOnline.Dominio.Comandas
             _repositorioDeLotes = repositorioDeLotes;
         }
 
-        public void Vender(Pedido pedido)
+        public void Vender(Comanda comanda)
         {
-            ValidarVenda(pedido);
-            var listaDeLotesComACervejaDesejada = _repositorioDeLotes.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome);
+            comanda.Pedidos.ForEach(pedido =>
+            {
+                var lotesComACervejaDesejada = _repositorioDeLotes.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome);
+                ValidarVenda(lotesComACervejaDesejada, pedido);
+                AlterarQuantidade(lotesComACervejaDesejada, pedido);
+            });
+        }
+        
+        public void ValidarVenda(List<Lote> lotesComACervejaDesejada, Pedido pedido)
+        {
+            var quantidadeTotalQueSeTemNosLotes = 0;
+            lotesComACervejaDesejada.ForEach(lote => 
+                quantidadeTotalQueSeTemNosLotes += lote.Quantidade);
 
-            foreach (var lote in listaDeLotesComACervejaDesejada)
+            ValidadorDeRegras.Novo()
+                .Quando(quantidadeTotalQueSeTemNosLotes < pedido.Quantidade, Resource.QuantidadeIndisponivel)
+                .DispararExcecaoSeExistir();
+        }
+
+        public void AlterarQuantidade(List<Lote> lotesComACervejaDesejada, Pedido pedido)
+        {
+            foreach (var lote in lotesComACervejaDesejada)
             {
                 if (lote.Quantidade > pedido.Quantidade)
                 {
@@ -31,19 +50,6 @@ namespace BrejaOnline.Dominio.Comandas
                     pedido.AlterarQuantidade(pedido.Quantidade - lote.Quantidade);
                 }
             }
-        }
-        
-        public void ValidarVenda(Pedido pedido)
-        {
-            var lotesComACervejaDesejada =_repositorioDeLotes.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome);
-
-            var quantidadeTotalQueSeTemNosLotes = 0;
-            lotesComACervejaDesejada.ForEach(lote => 
-                quantidadeTotalQueSeTemNosLotes += lote.Quantidade);
-
-            ValidadorDeRegras.Novo()
-                .Quando(quantidadeTotalQueSeTemNosLotes < pedido.Quantidade, Resource.QuantidadeIndisponivel)
-                .DispararExcecaoSeExistir();
         }
     }
 }
