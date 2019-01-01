@@ -12,37 +12,37 @@ namespace BrejaOnline.Dominio.Comandas
             _repositorioDeLotes = repositorioDeLotes;
         }
 
-        public void Vender(Comanda comanda)
+        public void Vender(Pedido pedido)
         {
-            ValidarVenda(comanda);
-            var listaDeLotesComACervejaDesejada = _repositorioDeLotes.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome);
+            ValidarVenda(pedido);
+            var listaDeLotesComACervejaDesejada = _repositorioDeLotes.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome);
 
             foreach (var lote in listaDeLotesComACervejaDesejada)
             {
-                if (lote.Quantidade > comanda.Quantidade)
+                if (lote.Quantidade > pedido.Quantidade)
                 {
-                    lote.DecrementarQuantidade(comanda.Quantidade);
-                    _repositorioDeLotes.Atualizar(lote);
+                    lote.DecrementarQuantidade(pedido.Quantidade);
+                    _repositorioDeLotes.AtualizarQuantidade(lote.Identificador, lote.Quantidade);
                     break;
                 }
                 else
                 {
                     _repositorioDeLotes.Excluir(lote);
-                    comanda.AlterarQuantidade(comanda.Quantidade - lote.Quantidade);
+                    pedido.AlterarQuantidade(pedido.Quantidade - lote.Quantidade);
                 }
             }
         }
-
-        public void ValidarVenda(Comanda comanda)
+        
+        public void ValidarVenda(Pedido pedido)
         {
-            var listaDeLotesComACervejaDesejada =_repositorioDeLotes.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome);
+            var lotesComACervejaDesejada =_repositorioDeLotes.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome);
 
             var quantidadeTotalQueSeTemNosLotes = 0;
-            listaDeLotesComACervejaDesejada.ForEach(lote => 
+            lotesComACervejaDesejada.ForEach(lote => 
                 quantidadeTotalQueSeTemNosLotes += lote.Quantidade);
 
             ValidadorDeRegras.Novo()
-                .Quando(quantidadeTotalQueSeTemNosLotes < comanda.Quantidade, Resource.QuantidadeIndisponivel)
+                .Quando(quantidadeTotalQueSeTemNosLotes < pedido.Quantidade, Resource.QuantidadeIndisponivel)
                 .DispararExcecaoSeExistir();
         }
     }

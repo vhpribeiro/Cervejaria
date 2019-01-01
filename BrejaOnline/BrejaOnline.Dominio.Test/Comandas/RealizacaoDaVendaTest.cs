@@ -24,51 +24,51 @@ namespace BrejaOnline.Dominio.Test.Comandas
         [Fact]
         public void Deve_realizar_uma_busca_nos_lotes_pelo_nome_da_cerveja()
         {
-            var comanda = ComandaBuilder.Novo().Criar();
+            var pedido = PedidoBuilder.Novo().Criar();
             var listaDeLotesObtida = new List<Lote>()
             {
-                new Lote(comanda.Cerveja, 7),
-                new Lote(comanda.Cerveja, 3)
+                new Lote(pedido.Cerveja, 7),
+                new Lote(pedido.Cerveja, 3)
             };
-            _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
+            _repositorioDeLotes.Setup(repositorio => repositorio.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome))
                 .Returns(listaDeLotesObtida);
 
-            _realizacaoDaVenda.ValidarVenda(comanda);
+            _realizacaoDaVenda.ValidarVenda(pedido);
 
             _repositorioDeLotes.Verify(repositorio =>
-                repositorio.ObterPeloNomeDaCerveja(It.Is<string>(nomeDaCerveja => nomeDaCerveja == comanda.Cerveja.Nome)));
+                repositorio.ObterLotesPeloNomeDaCerveja(It.Is<string>(nomeDaCerveja => nomeDaCerveja == pedido.Cerveja.Nome)));
         }
 
         [Fact]
         public void Nao_deve_realizar_uma_venda_caso_nao_tenha_quantidade_necessaria()
         {
-            var comanda = ComandaBuilder.Novo().ComQuantidade(6).Criar();
+            var pedido = PedidoBuilder.Novo().ComQuantidade(6).Criar();
             var listaDeLotesObtida = new List<Lote>()
             {
-                new Lote(comanda.Cerveja, 2),
-                new Lote(comanda.Cerveja, 3)
+                new Lote(pedido.Cerveja, 2),
+                new Lote(pedido.Cerveja, 3)
             };
-            _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
+            _repositorioDeLotes.Setup(repositorio => repositorio.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome))
                 .Returns(listaDeLotesObtida);
 
-            Action acao = () => _realizacaoDaVenda.ValidarVenda(comanda);
+            Action acao = () => _realizacaoDaVenda.ValidarVenda(pedido);
 
             Assert.Throws<ExcecaoDeDominio>(acao).ComMensagem(Resource.QuantidadeIndisponivel);
         }
 
         [Fact]
-        public void Deve_diminuir_quantidade_do_lote_caso_a_da_comanda_for_menor()
+        public void Deve_diminuir_quantidade_do_lote_caso_o_do_pedido_for_menor()
         {
             const int quantidadeEsperada = 1;
-            var comanda = ComandaBuilder.Novo().ComQuantidade(7).Criar();
+            var pedido = PedidoBuilder.Novo().ComQuantidade(7).Criar();
             var listaDeLotes = new List<Lote>
             {
-                new Lote(comanda.Cerveja, 8)
+                new Lote(pedido.Cerveja, 8)
             };
-            _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
+            _repositorioDeLotes.Setup(repositorio => repositorio.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome))
                 .Returns(listaDeLotes);
 
-            _realizacaoDaVenda.Vender(comanda);
+            _realizacaoDaVenda.Vender(pedido);
 
             Assert.Equal(quantidadeEsperada, listaDeLotes.First().Quantidade);
         }
@@ -76,34 +76,35 @@ namespace BrejaOnline.Dominio.Test.Comandas
         [Fact]
         public void Deve_atualizar_o_lote_com_a_nova_quantidade_no_repositorio()
         {
-            const int quantidadeEsperada = 1;
-            var comanda = ComandaBuilder.Novo().ComQuantidade(7).Criar();
+            var pedido = PedidoBuilder.Novo().ComQuantidade(7).Criar();
             var listaDeLotes = new List<Lote>
             {
-                new Lote(comanda.Cerveja, 8)
+                new Lote(pedido.Cerveja, 8)
             };
-            _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
+            _repositorioDeLotes.Setup(repositorio => repositorio.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome))
                 .Returns(listaDeLotes);
 
-            _realizacaoDaVenda.Vender(comanda);
+            _realizacaoDaVenda.Vender(pedido);
 
-            _repositorioDeLotes.Verify(repositorio => repositorio.Atualizar(It.Is<Lote>(lote => lote.Quantidade == quantidadeEsperada)));
+            _repositorioDeLotes.Verify(repositorio => repositorio.AtualizarQuantidade
+                (It.Is<string>(loteId => loteId.Equals(listaDeLotes.First().Identificador)),
+                It.Is<int>(loteQuantidade => loteQuantidade.Equals(listaDeLotes.First().Quantidade))));
         }
 
         [Fact]
-        public void Deve_excluir_lote_caso_a_quantidade_da_comanda_for_maior()
+        public void Deve_excluir_lote_caso_a_quantidade_do_pedido_for_maior()
         {
-            var comanda = ComandaBuilder.Novo().ComQuantidade(10).Criar();
+            var pedido = PedidoBuilder.Novo().ComQuantidade(10).Criar();
             var listaDeLotes = new List<Lote>
             {
-                new Lote(comanda.Cerveja, 5),
-                new Lote(comanda.Cerveja, 3),
-                new Lote(comanda.Cerveja, 4)
+                new Lote(pedido.Cerveja, 5),
+                new Lote(pedido.Cerveja, 3),
+                new Lote(pedido.Cerveja, 4)
             };
-            _repositorioDeLotes.Setup(repositorio => repositorio.ObterPeloNomeDaCerveja(comanda.Cerveja.Nome))
+            _repositorioDeLotes.Setup(repositorio => repositorio.ObterLotesPeloNomeDaCerveja(pedido.Cerveja.Nome))
                 .Returns(listaDeLotes);
 
-            _realizacaoDaVenda.Vender(comanda);
+            _realizacaoDaVenda.Vender(pedido);
 
             _repositorioDeLotes.Verify(repositorio => repositorio.Excluir(It.IsAny<Lote>()), Times.AtLeast(2));
         }

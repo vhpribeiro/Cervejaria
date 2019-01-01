@@ -1,32 +1,25 @@
-﻿using BrejaOnline.Dominio.Cervejas;
+﻿using System.Collections.Generic;
 using BrejaOnline.Dominio._Base;
 
 namespace BrejaOnline.Dominio.Comandas
 {
     public class Comanda
     {
-        public Cerveja Cerveja { get; protected set; }
-        public int Quantidade { get; protected set; }
-        public double ValorTotal { get; protected set; }
+        public List<Pedido> Pedidos { get; private set; }
+        public double ValorTotal { get; private set; }
 
-        public Comanda(Cerveja cerveja, int quantidade)
+        public Comanda(List<Pedido> pedidos)
         {
+            //TODO como fazer o InlineData receber uma lista vazia?
             ValidadorDeRegras.Novo()
-                .Quando(quantidade < 0, Resource.QuantidadeInvalida)
+                .Quando(pedidos.Count == 0, Resource.ComandaSemPedidos)
                 .DispararExcecaoSeExistir();
 
-            Cerveja = cerveja;
-            Quantidade = quantidade;
-            ValorTotal = cerveja.Preco * quantidade;
-        }
+            Pedidos = pedidos;
+            ValorTotal = 0;
 
-        public void AlterarQuantidade(int quantidadeEsperada)
-        {
-            ValidadorDeRegras.Novo()
-                .Quando(quantidadeEsperada < 0, Resource.QuantidadeInvalida)
-                .DispararExcecaoSeExistir();
-
-            Quantidade = quantidadeEsperada;
+            pedidos.ForEach(pedido =>
+                ValorTotal += pedido.Valor);
         }
     }
 }

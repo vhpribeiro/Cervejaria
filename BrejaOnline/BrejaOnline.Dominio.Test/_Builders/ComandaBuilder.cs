@@ -1,33 +1,36 @@
-﻿using BrejaOnline.Dominio.Cervejas;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using BrejaOnline.Dominio.Comandas;
 
 namespace BrejaOnline.Dominio.Test._Builders
 {
     public class ComandaBuilder
     {
-        private Cerveja _cerveja = CervejaBuilder.Novo().Criar();
-        private int _quantidade = 10;
+        private List<Pedido> _pedidos;
 
         public static ComandaBuilder Novo()
         {
-            return new ComandaBuilder();
+            return new ComandaBuilder
+            {
+                _pedidos = new List<Pedido>()
+            };
         }
 
-        public ComandaBuilder ComCerveja(Cerveja cerveja)
+        public ComandaBuilder ComPedidos(List<Pedido> pedidos)
         {
-            _cerveja = cerveja;
+            _pedidos = pedidos;
             return this;
         }
 
-        public ComandaBuilder ComQuantidade(int quantidade)
+        public void ComNovoPedido(Pedido pedido)
         {
-            _quantidade = quantidade;
-            return this;
+            _pedidos.Add(pedido);
         }
 
         public Comanda Criar()
         {
-            return new Comanda(_cerveja, _quantidade);
+            return new Comanda(_pedidos);
         }
     }
 }
