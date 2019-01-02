@@ -122,8 +122,9 @@ namespace BrejaOnline.Dominio.Test.Comandas
                 .Returns(_lotes);
 
             _realizacaoDaVenda.Vender(comanda);
-            //TODO aqui teria que verificar quais repositorios ele excluiu?
-            _repositorioDeLotes.Verify(repositorio => repositorio.Excluir(It.IsAny<Lote>()), Times.AtLeast(2));
+
+            _repositorioDeLotes.Verify(repositorio => repositorio.Excluir(It.Is<Lote>(lote => lote == primeiroLote)));
+            _repositorioDeLotes.Verify(repositorio => repositorio.Excluir(It.Is<Lote>(lote => lote == segundoLote)));
         }
     }
 }

@@ -10,3 +10,7 @@ BrejaOnline/BrejaOnline\.Dominio\.Test/obj/Debug/netcoreapp2\.1/
 BrejaOnline/BrejaOnline\.Dominio/bin/Debug/netcoreapp2\.1/
 
 BrejaOnline/BrejaOnline\.Dominio/obj/Debug/netcoreapp2\.1/
+
+BrejaOnline/BrejaOnline\.Dominio\.Test/obj/
+
+BrejaOnline/BrejaOnline\.Dominio/obj/
