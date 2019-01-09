@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using BrejaOnline.Dominio.Comandas;
-using BrejaOnline.Dominio.Test.Builders;
+using BrejaOnline.Dominio.Test._Builders;
+using BrejaOnline.Dominio.Test._Util;
 using BrejaOnline.Dominio._Base;
 using ExpectedObjects;
 using Xunit;
@@ -12,49 +13,33 @@ namespace BrejaOnline.Dominio.Test.Comandas
         [Fact]
         public void Deve_criar_uma_comanda()
         {
-            var cerveja = CervejaBuilder.Novo().Criar();
-            const int quantidade = 4;
-            double valorTotal = cerveja.Preco * quantidade;
+            var cervejaDoPrimeiroPedido = CervejaBuilder.Novo().Criar();
+            var cervejaDoSegundoPedido = CervejaBuilder.Novo().ComNome("Budweiser").ComPreco(6.75).Criar();
+            var primeiroPedido = new Pedido(cervejaDoPrimeiroPedido, 5);
+            var segundoPedido = new Pedido(cervejaDoSegundoPedido, 4);
+            var valorTotal = primeiroPedido.Valor + segundoPedido.Valor;
+            var pedidos = new List<Pedido>
+            {
+                primeiroPedido,
+                segundoPedido
+            };
             var comandaEsperada = new
             {
-                Cerveja = cerveja,
-                Quantidade = quantidade,
+                Pedidos = pedidos,
                 ValorTotal = valorTotal
-            }.ToExpectedObject();
+            };
 
-            var comandaObtida = new Comanda(cerveja, quantidade);
+            var comandaObtida = new Comanda(pedidos);
 
-            comandaEsperada.ShouldMatch(comandaObtida);
+            comandaEsperada.ToExpectedObject().ShouldMatch(comandaObtida);
         }
 
         [Fact]
-        public void Nao_deve_permitir_quantidade_invalida()
+        public void Nao_deve_criar_uma_comanda_sem_pedidos()
         {
-            const int quantidadeInvalida = -6;
+            var pedidosInvalidos = new List<Pedido>();
 
-            Action acao = () => ComandaBuilder.Novo().ComQuantidade(quantidadeInvalida).Criar();
-
-            Assert.Throws<ExcecaoDeDominio>(acao);
-        }
-
-        [Fact]
-        public void Deve_alterar_a_quantidade()
-        {
-            const int quantidadeEsperada = 5;
-            var comanda = ComandaBuilder.Novo().Criar();
-
-            comanda.AlterarQuantidade(quantidadeEsperada);
-
-            Assert.Equal(quantidadeEsperada, comanda.Quantidade);
-        }
-
-        [Fact]
-        public void Nao_deve_alterar_para_uma_quantidade_invalida()
-        {
-            const int quantidadeInvalida = -6;
-            var comanda = ComandaBuilder.Novo().Criar();
-
-            Assert.Throws<ExcecaoDeDominio>(() => comanda.AlterarQuantidade(quantidadeInvalida));
+            Assert.Throws<ExcecaoDeDominio>(() => new Comanda(pedidosInvalidos)).ComMensagem(Resource.ComandaSemPedidos);
         }
     }
 }

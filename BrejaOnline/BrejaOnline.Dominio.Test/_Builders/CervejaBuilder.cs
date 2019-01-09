@@ -1,6 +1,6 @@
 ﻿using BrejaOnline.Dominio.Cervejas;
 
-namespace BrejaOnline.Dominio.Test.Builders
+namespace BrejaOnline.Dominio.Test._Builders
 {
     class CervejaBuilder
     {

@@ -12,8 +12,8 @@ namespace BrejaOnline.Dominio.Cervejas
         public Cerveja(string nome, double preco, string descricao, TipoDeCerveja tipo)
         {
             ValidadorDeRegras.Novo()
-                .Quando(preco <= 0, "Preço inválido")
-                .Quando(string.IsNullOrEmpty(nome), "Nome inválido")
+                .Quando(preco <= 0, Resource.PrecoInvalido)
+                .Quando(string.IsNullOrEmpty(nome), Resource.NomeInvalido)
                 .DispararExcecaoSeExistir();
 
             Nome = nome;
@@ -25,7 +25,7 @@ namespace BrejaOnline.Dominio.Cervejas
         public void AlterarNome(string nome)
         {
             ValidadorDeRegras.Novo()
-                .Quando(string.IsNullOrEmpty(nome), "Nome inválido")
+                .Quando(string.IsNullOrEmpty(nome), Resource.NomeInvalido)
                 .DispararExcecaoSeExistir();
             Nome = nome;
         }

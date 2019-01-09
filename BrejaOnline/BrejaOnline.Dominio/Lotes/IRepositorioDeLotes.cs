@@ -7,7 +7,8 @@ namespace BrejaOnline.Dominio.Lotes
     {
         Lote ObterPeloId(string identificador);
         void Adiciona(Lote lote);
-        List<Lote> ObterPeloNomeDaCerveja(string nomeDaCerveja);
-        void Excluir(Lote isAny);
+        List<Lote> ObterLotesPeloNomeDaCerveja(string nomeDaCerveja);
+        void Excluir(Lote lote);
+        void AtualizarQuantidade(string id, int quantidade);
     }
 }
