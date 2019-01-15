@@ -2,7 +2,7 @@ using BrejaOnline.Dominio._Base;
 
 namespace BrejaOnline.Dominio.Cervejas
 {
-    public class Cerveja
+    public class Cerveja : Entidade
     {
         public string Nome { get; private set; }
         public double Preco { get; private set; }

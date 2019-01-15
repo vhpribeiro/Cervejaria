@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BrejaOnline.Dominio.Cervejas;
 
 namespace BrejaOnline.Dominio.Lotes
 {
@@ -8,6 +7,7 @@ namespace BrejaOnline.Dominio.Lotes
         Lote ObterPeloId(string identificador);
         void Adiciona(Lote lote);
         List<Lote> ObterLotesPeloNomeDaCerveja(string nomeDaCerveja);
+        List<Lote> ObterLotesPeloIdDaCerveja(int id);
         void Excluir(Lote lote);
         void AtualizarQuantidade(string id, int quantidade);
     }
